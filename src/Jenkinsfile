@@ -1,15 +1,23 @@
-pipeline{
-  agent any
-  stages{
-    stage('clean'){
-      steps{
-        sh 'mvn clean'
+pipeline {
+   agent any
+      stages{
+         stage('Validate'){
+              steps{
+                 sh 'mvn validate'
+              }
+         }
+         stage('compile'){
+               steps{
+                  sh 'mvn compile'
+               }
+         }
+         stage('test'){
+               steps{
+                  sh 'mvn test'
+               }
+         }
+         }
+
       }
-      stage('compile'){
-        steps{
-          sh 'mvn compile'
-        }
-      }
-    }
-  }
-}
+
+
