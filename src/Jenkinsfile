@@ -1,6 +1,11 @@
 pipeline {
    agent any
       stages{
+         stage('checkout'){
+               steps{
+                 git changelog: false, credentialsId: 'new-github-token', poll: false, url: 'https://github.com/medinahakinsowon/Ibt-maven.git'
+               }
+         }
          stage('Validate'){
               steps{
                  sh 'mvn validate'
@@ -21,9 +26,10 @@ pipeline {
                   sh 'mvn package'
                 }
          }
-         stage('clean'){
+         stage('owasp-scan'){
               steps{
-                 sh 'mvn clean'
+                 dependencyCheck additionalArguments:'--scan ./ --format HTML',odcInstallation:"OWASP-dependency-check"
+                 dependencyCheckPublisher pattern: "**/dependency-check-report.xml"
               }
          }
       }
