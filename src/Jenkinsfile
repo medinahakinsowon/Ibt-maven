@@ -29,7 +29,7 @@ pipeline {
                   sh 'mvn package'
                 }
          }
-           stage('sonarqube'){
+         stage('sonarqube'){
                  steps{
                    withSonarQubeEnv('sonar-server'){
                       sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Ibt-maven\
