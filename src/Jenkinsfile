@@ -38,9 +38,10 @@ pipeline {
           stage('sonarqube'){
                 steps{
                     withSonarQubeEnv('sonar-server'){
-                              sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Ibt-maven\
+                               '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Ibt-maven\
                                      -Dsonar.java.binaries= \
                                      -Dsonar.analysis.mode=
+                                     -Dsonar.host.url=http://localhost:9000
                                      -Dsonar.projectKey=Ibt-maven -Dsonar.sources=.'''\
                     }
                 }
