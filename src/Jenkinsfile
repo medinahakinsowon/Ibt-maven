@@ -31,8 +31,8 @@ pipeline {
          }
            stage('sonarqube'){
                  steps{
-                     withSonarQubeEnv(credentialsId: 'sonar-server'){
-                         sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Ibt-maven\
+                   withSonarQubeEnv('sonar-server'){
+                      sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Ibt-maven\
                              -Dsonar.java.binaries= \
                              -Dsonar.projectKey=Ibt-maven -Dsonar.sources=.'''\
                  }
