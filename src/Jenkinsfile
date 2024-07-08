@@ -40,6 +40,7 @@ pipeline {
                     withSonarQubeEnv('sonar-server'){
                               sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Ibt-maven\
                                      -Dsonar.java.binaries= \
+                                     -Dsonar.analysis.mode=
                                      -Dsonar.projectKey=Ibt-maven -Dsonar.sources=.'''\
                     }
                 }
