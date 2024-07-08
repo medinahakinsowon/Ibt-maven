@@ -42,7 +42,7 @@ pipeline {
                                      -Dsonar.java.binaries= \
                                      -Dsonar.analysis.mode=
                                      -Dsonar.host.url=http://localhost:9000
-                                     -Dsonar.projectKey=Ibt-maven -Dsonar.sources=.'''\
+                                     -Dsonar.projectKey=develop -Dsonar.sources=.'''\
                     }
                 }
            }
