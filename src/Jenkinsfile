@@ -24,15 +24,6 @@ pipeline {
                   sh 'mvn test'
                }
          }
-         stage('sonarqube'){
-               steps{
-                  withSonarQubeEnv('sonar-server'){
-                     sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Ibt-maven\
-                            -Dsonar.java.binaries= \
-                            -Dsonar.projectKey=Ibt-maven -Dsonar.sources=.'''\
-                     }
-               }
-         }
          stage('package'){
                 steps{
                   sh 'mvn package'
@@ -44,6 +35,15 @@ pipeline {
                  dependencyCheckPublisher pattern: "**/dependency-check-report.xml"
               }
          }
+          stage('sonarqube'){
+                steps{
+                    withSonarQubeEnv('sonar-server'){
+                              sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Ibt-maven\
+                                     -Dsonar.java.binaries= \
+                                     -Dsonar.projectKey=Ibt-maven -Dsonar.sources=.'''\
+                    }
+                }
+           }
 
 
       }
