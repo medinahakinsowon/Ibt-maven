@@ -1,5 +1,8 @@
 pipeline {
    agent any
+   environment{
+    SCANNER_HOME= tool: "sonar-server"
+   }
       stages{
          stage('checkout'){
                steps{
@@ -26,11 +29,21 @@ pipeline {
                   sh 'mvn package'
                 }
          }
+           stage('sonarqube'){
+                 steps{
+                     withSonarQubeEnv(credentialsId: 'sonar-server'){
+                         sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Ibt-maven\
+                             -Dsonar.java.binaries= \
+                             -Dsonar.projectKey=Ibt-maven -Dsonar.sources=.'''\
+                 }
+           }
          stage('owasp-scan'){
               steps{
                  dependencyCheck additionalArguments:'--scan ./ ',odcInstallation:"OWASP-dependency-check"
                  dependencyCheckPublisher pattern: "**/dependency-check-report.xml"
               }
+         }
+
          }
       }
 
