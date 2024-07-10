@@ -24,11 +24,6 @@ pipeline {
                   sh 'mvn test'
                }
          }
-         stage('package'){
-                steps{
-                  sh 'mvn package'
-                }
-         }
          stage('owasp-scan'){
               steps{
                  dependencyCheck additionalArguments:'--scan ./ ',odcInstallation:"OWASP-dependency-check"
