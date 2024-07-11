@@ -24,27 +24,15 @@ pipeline {
                   sh 'mvn test'
                }
          }
-         stage('owasp-scan'){
-              steps{
-                 dependencyCheck additionalArguments:'--scan ./ ',odcInstallation:"OWASP-dependency-check"
-                 dependencyCheckPublisher pattern: "**/dependency-check-report.xml"
-              }
+         stage('SonarQube Analysis') {
+         environment{
+           sonarScan= tool 'sonar-scanner'
          }
-          stage('sonarqube'){
-                steps{
-                    withSonarQubeEnv('sonar-server'){
-                              sh '''$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Ibt-maven\
-                                     -Dsonar.java.binaries= \
-                                     -Dsonar.analysis.mode=
-                                     -Dsonar.host.url=http://localhost:9000
-                                     -Dsonar.projectKey=project1 -Dsonar.sources=.'''\
-                    }
-                }
-           }
-
-
+             withSonarQubeEnv(credentialsId: 'sonar-token', installationName:'sonar-server') {
+               sh "$sonarScan/bin/sonar-scanner -Dsonar.projectKey=Ibt-maven"
+             }
+         }
       }
-
    }
 
 
